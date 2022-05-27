@@ -13,8 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::resource('events',\App\Http\Controllers\EventsController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::resource('events',\App\Http\Controllers\EventsController::class);
+});
+Route::get('events',[\App\Http\Controllers\EventsController::class,'index'])->name('events.index');
+Route::get('/',[\App\Http\Controllers\EventsController::class,'index'])->name('events.index');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/external-api', [\App\Http\Controllers\EventsController::class, 'externalApi'])->name('external-api');
