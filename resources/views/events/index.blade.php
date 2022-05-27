@@ -1,10 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.event')
 
 @section('content')
     <div class="container">
         <div class="row my-5">
 
-            <label class="h1 col-10">Events List</label>
+            <label class="h1 col-8">Events List</label>
+            <a href="{{route('external-api')}}" class="col-2 center">
+                External Api
+            </a>
             <a href="{{route('events.create')}}" class="col-2 center">
                 <div role="button" class="btn btn-primary text-center">Create Event</div>
             </a>

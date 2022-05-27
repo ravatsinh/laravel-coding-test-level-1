@@ -5,12 +5,35 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventRequest;
 use App\Http\Requests\EventUpdateRequest;
 use App\Models\Event;
+use App\Notifications\EventCreatedNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 class EventsController extends Controller
 {
+    public function externalApi(){
+        $data=[];
+        try {
+            $apiData=Http::get('https://catfact.ninja/fact')->body();
+            $data=json_decode($apiData,true);
+        }catch (\Exception $e){
+
+        }
+      /*  $fieldList=[
+            "API",
+        "Description",
+        "Auth",
+        "HTTPS",
+        "Cors",
+        "Link",
+        "Category",
+        ];
+        dump($data);*/
+
+        return view('external-api',['data'=>$data]);
+    }
     public function index()
     {
         if (request()->ajax()) {
@@ -48,6 +71,9 @@ class EventsController extends Controller
     {
         $event = Event::create($request->validated());
         if ($event) {
+
+            $request->user()->notify(new EventCreatedNotification($event));
+
             session()->flash('success', 'Event created successfully');
             return redirect()->route('events.index');
         }
