@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EventRequest;
-use App\Http\Requests\EventUpdateRequest;
+use App\Http\Requests\EventUpdateApiRequest;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Http\Request;
 use App\Models\Event;
@@ -70,7 +70,7 @@ class EventsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EventUpdateRequest $request, $id)
+    public function update(EventUpdateApiRequest $request, $id)
     {
 
         $event = Event::find($id);
