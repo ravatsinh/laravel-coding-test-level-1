@@ -4,15 +4,15 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EventUpdateRequest extends FormRequest
+class EventUpdateApiRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'name'=>'required|string',
-            'slug'=>'required|string|unique:events,slug,'.$this->id,
-            'startAt'=>'required|date',
-            'endAt'=>'required|date'
+            'name'=>'nullable|string',
+            'slug'=>'nullable|string',
+            'startAt'=>'nullable',
+            'endAt'=>'nullable'
         ];
     }
 
